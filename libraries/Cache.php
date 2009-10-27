@@ -4,13 +4,12 @@
  * Cache Class
  *
  * Partial Caching library for CodeIgniter
- * Forked form Jelmer Schreuder's "MP_Tree" a while back but greatly improved and stablized.
  *
  * @category	Libraries
- * @author		Philip Sturgeon
- * @link		http://github.com/philsturgeon/codeigniter-cache
+ * @author		Jelmer Schreuder
+ * @link		http://mpsimple.mijnpraktijk.com/mp_cache.htm
  * @license		MIT
- * @version		v0.9
+ * @version		2.0b3
  */
 
 class Cache
@@ -62,7 +61,7 @@ class Cache
 	 */
     public function library($library, $method, $arguments = array(), $expires = null)
     {
-    	return $this->_call($library, $method, $arguments, $expires);
+    	return $this->call($library, $method, $arguments, $expires);
     }
     
 	/**
@@ -73,11 +72,11 @@ class Cache
 	 */
     public function model($model, $method, $arguments = array(), $expires = null)
     {
-    	return $this->_call($model, $method, $arguments, $expires);
+    	return $this->call($model, $method, $arguments, $expires);
     }
     
     // Depreciated, use model() or library()
-    private function _call($property, $method, $arguments = array(), $expires = null)
+    private function call($property, $method, $arguments = array(), $expires = null)
     {
     	$this->ci->load->helper('security');
     	
@@ -87,21 +86,21 @@ class Cache
     	$cache_file = $property.DIRECTORY_SEPARATOR.dohash($method.serialize($arguments), 'sha1');
 		
 		// See if we have this cached
-		$cached_responce = $this->get($cache_file);
+		$cached_response = $this->get($cache_file);
 
 		// Not FALSE? Return it
-		if($cached_responce)
+		if($cached_response)
         {
-        	return $cached_responce;
+        	return $cached_response;
         }
         
         else
         {
         	// Call the model or library with the method provided and the same arguments
-        	$new_responce = call_user_func_array(array($this->ci->$property, $method), $arguments);
-        	$this->write($new_responce, $cache_file, $expires);
+        	$new_response = call_user_func_array(array($this->ci->$property, $method), $arguments);
+        	$this->write($new_response, $cache_file, $expires);
         	
-        	return $new_responce;
+        	return $new_response;
         }
     }
 	
