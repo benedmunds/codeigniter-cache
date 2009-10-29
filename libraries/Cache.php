@@ -28,13 +28,22 @@ class Cache
 	 */
     function __construct()
     {
+		log_message('debug', "Cache Class Initialized.");
+
         $this->ci =& get_instance();
-        
         $this->reset();
-        
-        $this->path = $this->ci->config->item('cache_dir');
-        $this->default_expires = $this->ci->config->item('cache_default_expires'); 
-        if ($this->path == '') return FALSE;
+
+		if ($this->ci->config->item('cache_dir') === FALSE OR $this->ci->config->item('cache_default_expires') === FALSE)
+		{
+			show_error('Missing cache config item(s): did you load the cache config class?');
+		}
+
+		$this->path = $this->ci->config->item('cache_dir');
+		$this->default_expires = $this->ci->config->item('cache_default_expires');
+		if ( ! is_dir($this->path))
+		{
+			show_error("Cache Path not found: $this->path");
+		}
     }
     
 	/**
