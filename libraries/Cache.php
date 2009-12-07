@@ -6,10 +6,10 @@
  * Partial Caching library for CodeIgniter
  *
  * @category	Libraries
- * @author		Jelmer Schreuder
- * @link		http://mpsimple.mijnpraktijk.com/mp_cache.htm
+ * @author		Phil Sturgeon
+ * @link		http://philsturgeon.co.uk/code/codeigniter-cache
  * @license		MIT
- * @version		2.0b3
+ * @version		2.1
  */
 
 class Cache
