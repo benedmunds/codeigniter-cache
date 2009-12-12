@@ -95,6 +95,11 @@ class Cache
 	private function _call($property, $method, $arguments = array(), $expires = NULL)
 	{
 		$this->ci->load->helper('security');
+
+		if(!is_array($arguments))
+		{
+			$arguments = (array) $arguments;
+		}
 		
 		// Clean given arguments to a 0-index array
 		$arguments = array_values($arguments);
