@@ -5,6 +5,13 @@ CodeIgniter-Cache is a partial caching library for CodeIgniter. It allows you to
 of data to and from the filesystem. By storing complex or large chunks of data in serialized form 
 on the file system you can relieve stress from the database or simply cache Twitter calls.
 
+
+Requirements
+------------
+
+1. PHP 5.1+
+2. CodeIgniter 1.7.x - 2.0-dev
+
 Usage
 -----
 
@@ -27,16 +34,3 @@ Installation
 ------------
 
 Permission your cache folder to be writeable by the web server.
-
-
-Requirements
-------------
-
-Only CodeIgniter
-
-
-Extra
------
-
-If you'd like to request changes, report bug fixes, or contact
-the developer of this library, email <email@philsturgeon.co.uk>
