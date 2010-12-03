@@ -362,6 +362,42 @@ class Cache
 	}
 
 	/**
+	 * Delete a group of cached files
+	 *
+	 * Allows you to pass a group to delete cache. Example:
+	 *
+	 * <code>
+	 * $this->cache->write($data, 'nav_title');
+	 * $this->cache->write($links, 'nav_links');
+	 * $this->cache->delete_group('nav_');
+	 * </code>
+	 *
+	 * @param 	string $group
+	 * @return 	void
+	 */
+	public function delete_group($group = null)
+	{
+		if ($group === null)
+		{
+			return FALSE;
+		}
+
+		$this->_ci->load->helper('directory');
+		$map = directory_map($this->_path, TRUE);
+
+		foreach ($map AS $file)
+		{
+			if (strpos($file, $group)  !== FALSE)
+			{
+				unlink($this->_path.$file);
+			}
+		}
+
+		// Reset values
+		$this->_reset();
+	}
+
+	/**
 	 * Delete Full Cache or Cache subdir
 	 *
 	 * @access	public
