@@ -5,7 +5,7 @@
  *
  * Partial Caching library for CodeIgniter
  *
- * @category	        Libraries
+ * @category	Libraries
  * @author		Phil Sturgeon
  * @link		http://philsturgeon.co.uk/code/codeigniter-cache
  * @license		MIT
@@ -110,7 +110,7 @@ class Cache
 		$cached_response = $this->get($cache_file);
 
 		// Not FALSE? Return it
-		if($cached_response)
+		if($cached_response !== FALSE && $cached_response !== NULL)
 		{
 			return $cached_response;
 		}
@@ -418,3 +418,6 @@ class Cache
 		$this->_reset();
 	}
 }
+
+/* End of file Cache.php */
+/* Location: ./application/libraries/Cache.php */
