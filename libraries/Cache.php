@@ -106,8 +106,17 @@ class Cache
 
 		$cache_file = $property.DIRECTORY_SEPARATOR.dohash($method.serialize($arguments), 'sha1');
 
-		// See if we have this cached
-		$cached_response = $this->get($cache_file);
+		// See if we have this cached or delete if $expires is negative
+		if($expires >= 0)
+		{
+			echo "caching ".$cache_file;
+			$cached_response = $this->get($cache_file);
+		}
+		else
+		{
+			$this->delete($cache_file);
+			return;
+		}
 
 		// Not FALSE? Return it
 		if($cached_response)
