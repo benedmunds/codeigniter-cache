@@ -106,8 +106,17 @@ class Cache
 
 		$cache_file = $property.DIRECTORY_SEPARATOR.dohash($method.serialize($arguments), 'sha1');
 
-		// See if we have this cached
-		$cached_response = $this->get($cache_file);
+		// See if we have this cached or delete if $expires is negative
+		if($expires >= 0)
+		{
+			echo "caching ".$cache_file;
+			$cached_response = $this->get($cache_file);
+		}
+		else
+		{
+			$this->delete($cache_file);
+			return;
+		}
 
 		// Not FALSE? Return it
 		if($cached_response)
@@ -356,6 +365,42 @@ class Cache
 		$file_path = $this->path.$this->filename.'.cache';
 
 		if (file_exists($file_path)) unlink($file_path);
+
+		// Reset values
+		$this->_reset();
+	}
+
+	/**
+	 * Delete a group of cached files
+	 *
+	 * Allows you to pass a group to delete cache. Example:
+	 *
+	 * <code>
+	 * $this->cache->write($data, 'nav_title');
+	 * $this->cache->write($links, 'nav_links');
+	 * $this->cache->delete_group('nav_');
+	 * </code>
+	 *
+	 * @param 	string $group
+	 * @return 	void
+	 */
+	public function delete_group($group = null)
+	{
+		if ($group === null)
+		{
+			return FALSE;
+		}
+
+		$this->_ci->load->helper('directory');
+		$map = directory_map($this->_path, TRUE);
+
+		foreach ($map AS $file)
+		{
+			if (strpos($file, $group)  !== FALSE)
+			{
+				unlink($this->_path.$file);
+			}
+		}
 
 		// Reset values
 		$this->_reset();
