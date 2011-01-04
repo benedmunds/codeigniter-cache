@@ -39,6 +39,10 @@ Usage
 	$this->cache->write($data, 'nav_footer');
 	$this->cache->delete_group('nav_');
 
+	// Delete cache item
+	// Call like a normal library or model but give a negative $expire
+	$this->cache->model('blog_m', 'getPosts', array($category_id, 'live'), -1); // delete this specific cache file
+
 Installation
 ------------
 

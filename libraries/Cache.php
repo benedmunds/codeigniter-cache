@@ -106,8 +106,17 @@ class Cache
 
 		$cache_file = $property.DIRECTORY_SEPARATOR.dohash($method.serialize($arguments), 'sha1');
 
-		// See if we have this cached
-		$cached_response = $this->get($cache_file);
+		// See if we have this cached or delete if $expires is negative
+		if($expires >= 0)
+		{
+			echo "caching ".$cache_file;
+			$cached_response = $this->get($cache_file);
+		}
+		else
+		{
+			$this->delete($cache_file);
+			return;
+		}
 
 		// Not FALSE? Return it
 		if($cached_response !== FALSE && $cached_response !== NULL)
@@ -237,9 +246,9 @@ class Cache
 		}
 
 		// Instantiate the object variables
-		$this->expires	  = @$this->contents['__cache_expires'];
-		$this->dependencies = @$this->contents['__cache_dependencies'];
-		$this->created	  = @$this->contents['__cache_created'];
+		$this->expires		= isset($this->contents['__cache_expires']) ? $this->contents['__cache_expires'] : NULL;
+		$this->dependencies = isset($this->contents['__cache_dependencies']) ? $this->contents['__cache_dependencies'] : NULL;
+		$this->created		= isset($this->contents['__cache_created']) ? $this->contents['__cache_created'] : NULL;
 
 		// Cleanup the meta variables from the contents
 		$this->contents = @$this->contents['__cache_contents'];
