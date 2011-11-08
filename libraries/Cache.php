@@ -67,7 +67,7 @@ class Cache
 	 */
 	public function library($library, $method, $arguments = array(), $expires = NULL)
 	{
-		if(!in_array(ucfirst($library), $this->_ci->load->_ci_classes))
+		if ( ! class_exists(ucfirst($library)))
 		{
 			$this->_ci->load->library($library);
 		}
@@ -83,7 +83,7 @@ class Cache
 	 */
 	public function model($model, $method, $arguments = array(), $expires = NULL)
 	{
-		if(!in_array(ucfirst($model), $this->_ci->load->_ci_classes))
+		if ( ! class_exists(ucfirst($model)))
 		{
 			$this->_ci->load->model($model);
 		}
@@ -96,7 +96,7 @@ class Cache
 	{
 		$this->_ci->load->helper('security');
 
-		if(!is_array($arguments))
+		if ( !  is_array($arguments))
 		{
 			$arguments = (array) $arguments;
 		}
@@ -139,22 +139,28 @@ class Cache
 	function set_dependencies($dependencies)
 	{
 		if (is_array($dependencies))
+		{
 			$this->_dependencies = $dependencies;
+		}
 		else
+		{
 			$this->_dependencies = array($dependencies);
+		}
 
-		// Return $this to support chaining
 		return $this;
 	}
 
 	function add_dependencies($dependencies)
 	{
 		if (is_array($dependencies))
+		{
 			$this->_dependencies = array_merge($this->_dependencies, $dependencies);
+		}
 		else
+		{
 			$this->_dependencies[] = $dependencies;
+		}
 
-		// Return $this to support chaining
 		return $this;
 	}
 
