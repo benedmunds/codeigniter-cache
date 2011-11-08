@@ -1,19 +1,15 @@
-CodeIgniter-Cache
-=================
+# CodeIgniter-Cache
 
 CodeIgniter-Cache is a partial caching library for CodeIgniter. It allows you to write and get chunks
 of data to and from the filesystem. By storing complex or large chunks of data in serialized form
 on the file system you can relieve stress from the database or simply cache Twitter calls.
 
+## Requirements
 
-Requirements
-------------
+1. PHP 5.2.x
+2. CodeIgniter 2.0.x to 2.1.0
 
-1. PHP 5.1+
-2. CodeIgniter 1.7.x - 2.0-dev
-
-Usage
------
+## Usage
 
 	// Uncached model call
 	$this->blog_m->getPosts($category_id, 'live');
@@ -43,7 +39,6 @@ Usage
 	// Call like a normal library or model but give a negative $expire
 	$this->cache->model('blog_m', 'getPosts', array($category_id, 'live'), -1); // delete this specific cache file
 
-Installation
-------------
+## Installation
 
 Permission your cache folder to be writeable by the web server.
